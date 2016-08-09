@@ -1,0 +1,33 @@
+*{
+	box-sizing: border-box;
+}
+body {
+    background: rgb(0, 0, 0);
+}
+$show-animation-duration:300ms;
+h1 {
+    background:yellow;
+    display: inline-block;
+    height:150px;
+    width:25%;
+    float:left;
+    animation:show $show-animation-duration linear forwards;
+    opacity:0.1;
+    padding:0 15px;
+    background-clip:content-box;
+}
+
+@for $i from 1 through 100 {
+    h1:nth-of-type(#{$i+1}){
+        animation-delay: ($show-animation-duration *0.5) * ($i);
+    }
+}
+
+@keyframes show {
+    0% {
+        opacity:0.1;
+    }
+    100% {
+        opacity:1;
+    }
+}
