@@ -1,33 +1,101 @@
-*{
-	box-sizing: border-box;
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
 }
+
+@mixin clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
 body {
     background: rgb(0, 0, 0);
+    margin: 0;
 }
+
 $show-animation-duration:300ms;
+input {
+    display: none;
+}
+
+input:checked+div {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: auto;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    transition: all .3s linear;
+    background: rgba(160, 160, 160, 0.46);
+    h1 {
+        animation: popup-in 300ms linear forwards;
+        z-index: 9999;
+    }
+}
+
+.h1-wrapper {
+    @include clearfix;
+}
+
 h1 {
-    background:yellow;
+    background: yellow;
     display: inline-block;
-    height:150px;
-    width:25%;
-    float:left;
-    animation:show $show-animation-duration linear forwards;
-    opacity:0.1;
-    padding:0 15px;
-    background-clip:content-box;
+    height: 150px;
+    width: 25%;
+    float: left;
+    animation: show $show-animation-duration linear forwards;
+    transition: all 500ms ease;
+    padding: 0 15px;
+    background-clip: content-box;
+    opacity: 0.1;
+    transform: translate3d(0, 5px, 0);
+    label {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 }
 
 @for $i from 1 through 100 {
-    h1:nth-of-type(#{$i+1}){
+    h1:nth-of-type(#{$i+1}) {
         animation-delay: ($show-animation-duration *0.5) * ($i);
     }
 }
 
 @keyframes show {
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes popup-in {
+    0%,
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
     0% {
-        opacity:0.1;
+        position: fixed;
+        top: 0;
+        left: 0;
     }
     100% {
-        opacity:1;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        width: 50%;
+        height: 50%
     }
 }
